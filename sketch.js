@@ -100,6 +100,8 @@ class Paddle {
     if (keyIsDown(this.downKey)) {
       this.y += 5;
     }
+    this.y = constrain(this.y, 0, height - this.h);
+
   }
   
   show() {
