@@ -1,38 +1,53 @@
 let ball;
 let player1;
 let player2;
+let gameStarted = false;  // flag to track whether the game has started
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  
+  // create the start button
+startButton()
+}
+
+function startButton() {
+  button = createButton('Start Game').mousePressed(startGame);
+  button.position(5, 10)
+}
+
+function draw() {
+  background(0);
+  
+  if (gameStarted) {
+    player1.update();
+    player1.show();
+  
+    player2.update();
+    player2.show();
+  
+    ball.update();
+    ball.show();
+  
+    ball.checkPaddleCollision(player1);
+    ball.checkPaddleCollision(player2);
+  
+    displayScores();
+  }
+}
+
+function startGame() {
   ball = new Ball();
   player1 = new Paddle(windowWidth * 0.1, windowHeight/2);
   player2 = new Paddle(windowWidth * 0.9, windowHeight/2);
+  gameStarted = true;
 }
 
 function displayScores() {
   fill(255);
   textSize(32);
   textAlign(CENTER, CENTER);
-  text(player1.score, width/4, height/8);
-  text(player2.score, 3*width/4, height/8);
-}
-
-
-function draw() {
-  background(0);
-  displayScores()
-  
-  player1.update();
-  player1.show();
-  
-  player2.update();
-  player2.show();
-  
-  ball.update();
-  ball.show();
-  
-  ball.checkPaddleCollision(player1);
-  ball.checkPaddleCollision(player2);
+  text("P1 Score: " + player1.score, width/4, height/8);
+  text("P2 Score: " + player2.score, 3*width/4, height/8);
 }
 
 class Ball {
