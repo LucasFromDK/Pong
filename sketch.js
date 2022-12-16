@@ -1,19 +1,28 @@
 let ball;
 let player1;
 let player2;
-let gameStarted = false;  // flag to track whether the game has started
+let gameStarted = false;
+let startButton;  // declare the startButton variable here
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   
-  // create the start button
-startButton()
+  // create the start button and position it in the middle of the screen
+  startButton = createButton('Start Game');  // assign the button to the startButton variable
+  startButton.position(width/2 - startButton.width/2, height/2 - startButton.height/2);
+  startButton.mousePressed(startGame);
 }
 
-function startButton() {
-  button = createButton('Start Game').mousePressed(startGame);
-  button.position(5, 10)
+function startGame() {
+  ball = new Ball();
+  player1 = new Paddle(windowWidth * 0.1, windowHeight/2);
+  player2 = new Paddle(windowWidth * 0.9, windowHeight/2);
+  gameStarted = true;
+  
+  //hide the start button when the game starts.
+  startButton.hide();
 }
+
 
 function draw() {
   background(0);
@@ -32,6 +41,9 @@ function draw() {
     ball.checkPaddleCollision(player2);
   
     displayScores();
+  } else {
+    //If game has not started show the start button.
+    startButton.show();
   }
 }
 
@@ -40,7 +52,12 @@ function startGame() {
   player1 = new Paddle(windowWidth * 0.1, windowHeight/2);
   player2 = new Paddle(windowWidth * 0.9, windowHeight/2);
   gameStarted = true;
+  
+  // Hides start button when game starts.
+  startButton.hide();
 }
+
+
 
 function displayScores() {
   fill(255);
